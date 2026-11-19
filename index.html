@@ -80,6 +80,7 @@ button.sec{background:transparent;color:var(--pr);border:1px solid var(--pr)}
       <label for="dt">รายละเอียด</label>
       <textarea id="dt" placeholder="อธิบายปัญหา วันที่ สถานที่ และสิ่งที่ต้องการให้แก้ไข"></textarea>
       <div class="chk"><input type="checkbox" id="an"><label for="an" style="margin:0;font-weight:400">ไม่ประสงค์ออกนาม</label></div>
+      <div class="chk"><input type="checkbox" id="pd"><label for="pd" style="margin:0;font-weight:400">ข้าพเจ้ายินยอมให้ที่ทำการปกครองอำเภอปากท่อเก็บและใช้ข้อมูลส่วนบุคคลตามที่กรอก เพื่อดำเนินการตรวจสอบและแก้ไขเรื่องร้องเรียนนี้เท่านั้น ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562</label></div>
       <p style="margin-top:14px"><button id="sb">ส่งเรื่องร้องเรียน</button></p>
     </form>
     <div class="msg" id="ok"></div>
@@ -139,6 +140,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 $("sb").onclick=async()=>{
   const sj=$("sj").value.trim(),dt=$("dt").value.trim();
   if(!sj||!dt){alert("กรุณากรอกหัวข้อและรายละเอียด");return}
+  if(!$("pd").checked){alert("กรุณาติ๊กยินยอมการเก็บและใช้ข้อมูลส่วนบุคคลก่อนส่งเรื่อง");return}
   const d=new Date(),p=n=>String(n).padStart(2,"0");
   const id=`CP-${String(d.getFullYear()).slice(2)}${p(d.getMonth()+1)}${p(d.getDate())}-${Math.floor(1000+Math.random()*9000)}`;
   const rec={id,name:$("an").checked?"ไม่ออกนาม":$("nm").value.trim(),contact:$("ct").value.trim(),cat:$("cat").value,area:$("ar").value.trim(),sj,dt,status:"รับเรื่องแล้ว",at:d.toISOString()};
